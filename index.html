@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+			#div1{
+				width: 100px;
+				height: 200px;
+				position: absolute;
+				background: darkturquoise;
+				bottom: 0;
+				right: 0;
+			}
+		</style>
+		<script>
+			window.onscroll=function(){
+				var odiv=document.getElementById('div1');
+				//存在（IE和chrome ,FF）兼容性问题，滚动条滚动高度
+				var vscrolltop=document.documentElement.scrollTop||document.body.scrollTop;
+				//当前div距body的top距离=可视框的高度-div本身的高度+滚动条滚动的高度
+				/*odiv.style.top=document.documentElement.clientHeight-odiv.offsetHeight+vscrolltop+'px';*/
+				startMove(document.documentElement.clientHeight-odiv.offsetHeight+vscrolltop);
+			}
+			var timer=null;
+			function  startMove(iTarget){
+				var odiv=document.getElementById('div1');
+				clearTimeout(timer);
+				timer=setInterval(function(){
+					var speed=(iTarget-odiv.offsetTop)/1;
+					speed=speed<iTarget?Math.ceil(speed):Math.floor(speed);
+					odiv.style.top=odiv.offsetTop+speed+"px";
+				},30);
+			}
+		</script>
+	</head>
+	<body style="height: 2000px;">
+		<div id="div1"></div>
+	</body>
+</html>
